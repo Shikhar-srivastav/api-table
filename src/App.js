@@ -9,7 +9,6 @@ function App() {
 	useEffect(() => {
 		const getApiData = async () => {
 			const raw = await axios.get('https://dummyjson.com/users');
-			console.log(raw.data.users);
 			setUsers(raw.data.users);
 		}
 		
