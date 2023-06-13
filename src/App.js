@@ -1,24 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import TableEntry from "./TableEntry";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+	const [users, setUsers] = useState([]);
+
+	useEffect(() => {
+		const getApiData = async () => {
+			const raw = await axios.get('https://dummyjson.com/users');
+			console.log(raw.data.users);
+			setUsers(raw.data.users);
+		}
+		
+		getApiData();
+	}, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <table className="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th rowSpan={2}>ID</th>
+					<th rowSpan={2}>First Name</th>
+					<th rowSpan={2}>Last Name</th>
+					<th rowSpan={2}>Age</th>
+					<th rowSpan={2}>Gender</th>
+					<th rowSpan={2}>Email</th>
+					<th rowSpan={2}>Phone</th>
+					<th rowSpan={2}>Username</th>
+					<th rowSpan={2}>DOB</th>
+					<th rowSpan={2}>Height</th>
+					<th rowSpan={2}>Weight</th>
+					<th colSpan={2}>Location</th>
+					<th rowSpan={2}>Card Exp</th>
+					<th rowSpan={2}>Company</th>
+				</tr>
+				<tr>
+					<th>City</th>
+					<th>Coordinates</th>
+				</tr>
+			</thead>
+			<tbody>
+				{ users.map(user => <TableEntry key={users.id} { ...user } />) }
+			</tbody>
+		</table>
   );
 }
 
